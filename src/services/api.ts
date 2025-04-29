@@ -13,6 +13,15 @@ export const createUser = async (user: User): Promise<{ success: boolean; messag
       body: JSON.stringify(user),
     });
     
+    // Treat 409 (Conflict - User already exists) as a success case
+    if (response.status === 409) {
+      const data = await response.json();
+      return {
+        success: true, // Consider this a successful login even though user already exists
+        message: data.message || 'User already exists',
+      };
+    }
+    
     const data = await response.json();
     return {
       success: response.ok,

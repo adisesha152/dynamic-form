@@ -15,12 +15,12 @@ const Index = () => {
   const handleLogin = async (userData: User) => {
     setIsLoading(true);
     try {
-      // Create user
+      // Create user or login existing user
       const createResult = await createUser(userData);
       
       if (!createResult.success) {
         toast({
-          title: "Registration Failed",
+          title: "Login Failed",
           description: createResult.message,
           variant: "destructive",
         });
